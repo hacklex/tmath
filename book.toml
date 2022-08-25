@@ -1,0 +1,8 @@
+[book]
+authors = ["Сухарик"]
+language = "ru"
+multilingual = false
+src = "prose"
+
+[output.katex]
+[preprocessor.katex]
