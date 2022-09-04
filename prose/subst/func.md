@@ -13,10 +13,10 @@ l(5) &= 15 - 2 = 13
 Мы будем использовать определяемые выражением и вычисляемые с помощью подстановки функции
 как основание математики. Но сначала понадобится запись для процесса вычисления выражения.
 
-Запись ${?e_1} \leadsto {?e_2}$ означает, что результатом применения одного или более шагов
+Запись ${?e_1} \stackrel{*}\longrightarrow {?e_2}$ означает, что результатом применения конечного числа шагов
 вычисления к ${?e_1}$ является выражение ${?e_2}$. Например, вот так вычисляется выражение $l(3)$:
 
-$$l(3) \leadsto 3\cdot3 - 2 \leadsto 9 - 2 \leadsto 7$$
+$$l(3) \stackrel{*}\longrightarrow 3\cdot3 - 2 \stackrel{*}\longrightarrow 9 - 2 \stackrel{*}\longrightarrow 7$$
 
 Первым шагом является подстановка $3$ в определение функции $l$, последующие же — арифметическими
 операциями.
@@ -28,7 +28,7 @@ $$l(3) \leadsto 3\cdot3 - 2 \leadsto 9 - 2 \leadsto 7$$
 
 Как и выражения, равенства тоже можно вычислять. Например:
 
-$$(2\cdot 3 = 7-1) \leadsto (6 = 7-1) \leadsto (6=6)$$
+$$(2\cdot 3 = 7-1) \stackrel{*}\longrightarrow (6 = 7-1) \stackrel{*}\longrightarrow (6=6)$$
 
 Возможность обращаться с равенствами как с выражениями позволяет свести уравнения к функциям.
 Например, пусть дано уравнение:
@@ -42,14 +42,14 @@ $$eq(x) := (x^2 - 3x + 2 = 0)$$
 Применяя $eq$ к различным значениям $x$, получаем различные высказывания. Некоторые из них
 являются истиными:
 
-$$eq(1) \leadsto (1 - 3 + 2 = 0) \leadsto (0 = 0) \\
-eq(2) \leadsto (4 - 6 + 2 = 0) \leadsto (0 = 0)$$
+$$eq(1) \stackrel{*}\longrightarrow (1 - 3 + 2 = 0) \stackrel{*}\longrightarrow (0 = 0) \\
+eq(2) \stackrel{*}\longrightarrow (4 - 6 + 2 = 0) \stackrel{*}\longrightarrow (0 = 0)$$
 
 Остальные — ложными:
 
 $$\begin{aligned}
-eq(0) &\leadsto (2 = 0) \\
-eq(3) &\leadsto (9 - 9 + 2 = 0) \leadsto (2=0)
+eq(0) &\stackrel{*}\longrightarrow (2 = 0) \\
+eq(3) &\stackrel{*}\longrightarrow (9 - 9 + 2 = 0) \stackrel{*}\longrightarrow (2=0)
 \end{aligned}$$
 
 Значение $x$ является решением уравнения $eq$ в том случае, когда высказывание $eq(x)$ истино.
@@ -108,9 +108,9 @@ n+p &\text{если } k=s(p)
 Вычислим $3+2$, используя данные выше определения:
 
 $$\begin{aligned}
-    s(s(s(0)))   + s(s(0)) &\leadsto  s(s(s(s(0))))  +   s(0) \\
-  &\leadsto s(s(s(s(s(0))))) +     0 \\
-  &\leadsto s(s(s(s(s(0)))))
+    s(s(s(0)))   + s(s(0)) &\stackrel{*}\longrightarrow  s(s(s(s(0))))  +   s(0) \\
+  &\stackrel{*}\longrightarrow s(s(s(s(s(0))))) +     0 \\
+  &\stackrel{*}\longrightarrow s(s(s(s(s(0)))))
 \end{aligned}$$
 
 Унарная система счисления это далеко не самое эффективное предствление чисел, а определённое
@@ -145,11 +145,11 @@ $$sq(x) := x^2$$
 И затем вычисляем:
 
 $$\begin{aligned}
-sum(1, 3, sq) &\leadsto sum(1, 2, sq) + sq(3) \\
- &\leadsto sum(1, 1, sq) + sq(2) + sq(3) \\
- &\leadsto sum(1, 0, sq) + sq(1) + sq(2) + sq(3) \\
- &\leadsto 0 + 1 + 4 + 9 \\
- &\leadsto 14
+sum(1, 3, sq) &\stackrel{*}\longrightarrow sum(1, 2, sq) + sq(3) \\
+ &\stackrel{*}\longrightarrow sum(1, 1, sq) + sq(2) + sq(3) \\
+ &\stackrel{*}\longrightarrow sum(1, 0, sq) + sq(1) + sq(2) + sq(3) \\
+ &\stackrel{*}\longrightarrow 0 + 1 + 4 + 9 \\
+ &\stackrel{*}\longrightarrow 14
 \end{aligned}$$
 
 Чтобы не давать имена функциям вроде $sq$, введём понятие анонимной функции. Анонимная функция
@@ -158,7 +158,7 @@ sum(1, 3, sq) &\leadsto sum(1, 2, sq) + sq(3) \\
 Например, анонимная функция, вычисляющая квадрат числа выглядит следующим образом:
 $\lambda x.\; x^2$. Применяется же анонимные функции точно также, как и обычные функции:
 
-$$(\lambda x.\; x^2)(3) \leadsto 3^2 \leadsto 9$$
+$$(\lambda x.\; x^2)(3) \stackrel{*}\longrightarrow 3^2 \stackrel{*}\longrightarrow 9$$
 
 С помощью анонимной функции, сумма геометрической прогрессии может быть записана как
 $sum(0, n, \lambda i.\; q^i)$.
@@ -171,7 +171,7 @@ $$mul(x) := \lambda y.\; x\cdot y$$
 Тогда применение этой функции к $2$, а затем применение результата к $3$ вычисляется следующим
 образом:
 
-$$mul(2)(3) \leadsto (\lambda y.\; 2\cdot y)(3) \leadsto 2\cdot 3 \leadsto 6$$
+$$mul(2)(3) \stackrel{*}\longrightarrow (\lambda y.\; 2\cdot y)(3) \stackrel{*}\longrightarrow 2\cdot 3 \stackrel{*}\longrightarrow 6$$
 
 Этот пример также показывает, что функция двух аргументов могут быть сведенена к
 функции одного аргумента, результатом которой также является функция. Такое преобразование
