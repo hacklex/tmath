@@ -36,8 +36,8 @@ n+p &\text{если } k=s(p)
 $$add := λk.\; k\ n\ (λp.\;add\ n\ p)$$
 $$(λf.\;λk.\; k\ n\ (λp.\;f\ n\ p))\ add$$
 
-$$y \stackrel*⟶ f\ y$$
+$$y \xrightarrow{*} f\ y$$
 
 $$(λx.\;x\ x)\ (λx.\;x\ x) ⟶ (λx.\;x\ x)\ (λx.\;x\ x)$$
-$$(λx.\;f\ x\ x)\ (λx.\;f\ x\ x) ⟶ f\ (λx.\;f\ x\ x)\ (λx.\;f\ x\ x)$$
-$$Y := λf.\;(λx.\;f\ x\ x)\ (λx.\;f\ x\ x)$$
+$$(λx.\;f\ (x\ x))\ (λx.\;f\ (x\ x)) ⟶ f\ ((λx.\;f\ x\ x)\ (λx.\;f\ x\ x))$$
+$$Y := λf.\;(λx.\;f\ (x\ x))\ (λx.\;f\ (x\ x))$$
