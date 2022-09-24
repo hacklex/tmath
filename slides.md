@@ -429,11 +429,17 @@ expr ::=\ &var & &\text{(имя переменной)} \\
 
 ---
 
+Кроме того:
+
 - Вселенные типов пронумерованы натуральными числами: $\mathcal U\ 0$, $\mathcal U\ 1$, ...
 - Как и $λ$, $∀$ также захватывает переменные
 - Тип $∀{\color{red}x}: {\color{red}α}.\; {\color{red}β}$ также записывается как $(\textcolor{red}x: {\color{red}α}) → {\color{red}β}$
   - Или даже как ${\color{red}α} → {\color{red}β}$, если в $\color{red}β$ нет свободных вхождений переменной $\color{red}x$
+- $λ({\color{red}x}:{\color{red}α})({\color{red}y}:{\color{red}β}).\; {\color{red}e}$ означает $λ{\color{red}x}:{\color{red}α}.\;λ{\color{red}y}:{\color{red}β}.\; {\color{red}e}$
+  - Аналогично для $∀({\color{red}x}:{\color{red}α})({\color{red}y}:{\color{red}β}).\; {\color{red}τ}$
 - Стрелка правоассоциативна: ${\color{red}α} → {\color{red}β} → {\color{red}γ}$ означает ${\color{red}α} → ({\color{red}β} → {\color{red}γ})$
+
+Правилом вычисления в исчислении конструкций является бета-редукция.
 
 ---
 
@@ -445,12 +451,13 @@ $$\frac{j_1\qquad \dots\qquad j_n}{c}$$
 
 Если верхняя часть дроби пуста, то вывод заключения не требует предпосылок.
 
+Правила вывода можно читать и наоборот: чтобы вывести $c$, нужно сначала вывести $j_1$, …, $j_n$.
+
 ---
 
 Пример: пусть есть суждения вида ${\color{red}x} \sim {\color{red}y}$. И есть следующие правила вывода:
 
-$$\frac{}{{\color{red}x} \sim {\color{red}x}} \qquad
-\frac{{\color{red}x} \sim {\color{red}y}}{{\color{red}y} \sim {\color{red}x}} \qquad
+$$\frac{{\color{red}x} \sim {\color{red}y}}{{\color{red}y} \sim {\color{red}x}} \qquad
 \frac{{\color{red}x} \sim {\color{red}y}\qquad {\color{red}y}\sim{\color{red}z}}{{\color{red}x} \sim {\color{red}z}}$$
 
 Покажем, как из суждений $a \sim b$ и $a \sim c$ можно вывести $b \sim c$:
@@ -461,15 +468,30 @@ $$\frac{}{{\color{red}x} \sim {\color{red}x}} \qquad
 
 ---
 
-Суждение, что в контексте $\textcolor{red}Γ$, выражение $\textcolor{red}x$ имеет тип $\textcolor{red}α$, записывается как
+Суждение, что в контексте $Γ$, выражение $\textcolor{red}x$ имеет тип $\textcolor{red}α$, записывается как
 
-$$\textcolor{red}Γ ⊢ \textcolor{red}x:\textcolor{red}α$$
+$$Γ ⊢ \textcolor{red}x:\textcolor{red}α$$
 
 Контекст типизации это список пар вида ${\color{red}v}:{\color{red}τ}$, где $\color{red}v$ это переменная, а $\color{red}τ$ — её тип. Например:
 
 $$(n:Nat), (x: Fin\ n), (f: α → β)$$
 
+Мы пишем $Γ,({\color{red}v}:{\color{red}τ})$ чтобы присоединить пару ${\color{red}v}:{\color{red}τ}$ к контексту $Γ$.
+
 ---
+
+Наконец, мы можем описать правила типизации.
+
+Начальное правило проще описать словами: для каждой переменной ${\color{red}v}$, если из всех пар вида ${\color{red}v}:{\color{red}τ}$ пара ${\color{red}v}:{\color{red}α}$ является последней в $Γ$, то тогда $Γ ⊢ {\color{red}v}:{\color{red}α}$.
+
+Например:
+
+$$\begin{aligned}
+(x:Nat), (α: \mathcal U\ 1), (x:α) &⊢ x:α \\
+(x:Nat), (α: \mathcal U\ 1), (x:α) &⊢ α:\mathcal U\ 1
+\end{aligned}$$
+
+Следующее правило позволяет вычислять типы:
 
 $$\frac
 { Γ ⊢ \textcolor{red}e: \textcolor{red}α\qquad
@@ -477,25 +499,68 @@ $$\frac
   Γ ⊢ \textcolor{red}β: \mathcal U\ i}
 {Γ ⊢ \textcolor{red}e:\textcolor{red}β}$$
 
+Здесь требуется, чтобы тип $\color{red}β$ был также корректно типизирован.
+
+И наконец, перечислим правила типизации для выражений.
+
 ---
 
 - Вселенные
-$$\frac{}{\mathcal U\ i : \mathcal U\ (i + 1)}$$
+$$\frac{}{Γ ⊢ \mathcal U\ i : \mathcal U\ (i + 1)}$$
 - Тип зависимых функций
 $$\frac{
   Γ ⊢ {\color{red}α}: \mathcal U\ i \qquad
   Γ,({\color{red}x}: {\color{red}α}) ⊢ {\color{red}β}: \mathcal U\ j
-}{(∀{\color{red}x}:{\color{red}α}.\; {\color{red}β}): \mathcal U\ max(i,j)}$$
+}{Γ ⊢ (∀{\color{red}x}:{\color{red}α}.\; {\color{red}β}): \mathcal U\ max(i,j)}$$
 - Абстракция
 $$\frac
 { Γ,({\color{red}x}:{\color{red}α}) ⊢ {\color{red}e}:{\color{red}β} \qquad
   Γ ⊢ (∀{\color{red}x}:{\color{red}α}.\;{\color{red}β}):\mathcal U\ i      }
-{ (λ{\color{red}x}:{\color{red}α}.\;{\color{red}e}):
+{Γ ⊢ (λ{\color{red}x}:{\color{red}α}.\;{\color{red}e}):
   (∀{\color{red}x}:{\color{red}α}.\;{\color{red}β})                        }$$
 - Применение
 $$\frac
 { Γ ⊢ {\color{red}f}:(∀{\color{red}x}:{\color{red}α}.\;{\color{red}β})\qquad
   Γ⊢ {\color{red}v}:{\color{red}α}                                           }
 {Γ ⊢ ({\color{red} f\ v}): {\color{red}β}[{\color{red}x} := {\color{red}v}]}$$
+
+---
+
+Типизировнная версия выражения $λx\,y.\;x$ выглядит так:
+
+$$\big(λ(α\, β:\mathcal U\ 1)(x:α)(y:β).\;x\big) : ∀α\,β:\mathcal U\ 1.\; α → β → α$$
+
+Покажем, что выражение действительно имеет этот тип.
+
+---
+
+Применяя правила в обратном порядке, сначала покажем, что тип корректно типизирован:
+
+$$\begin{aligned}
+&⊢ (∀α\,β:\mathcal U\ 1.\; α → β → α): \mathcal U\ 2 \\
+(α:\mathcal U\ 1) &⊢ (∀β:\mathcal U\ 1.\; α → β → α): \mathcal U\ 2 \\
+(α:\mathcal U\ 1), (β:\mathcal U\ 1) &⊢ (α → β → α): \mathcal U\ 1 \\
+(α:\mathcal U\ 1), (β:\mathcal U\ 1),({\color{red}u}:α) &⊢ (β → α): \mathcal U\ 1 \\
+(α:\mathcal U\ 1), (β:\mathcal U\ 1),({\color{red}u}:α),({\color{red}v}:β) &⊢ β: \mathcal U\ 1 \\
+(α:\mathcal U\ 1), (β:\mathcal U\ 1),({\color{red}u}:α),({\color{red}v}:β) &⊢ α: \mathcal U\ 1 \\
+\end{aligned}$$
+
+Суждения о вселенных опущены для краткости. $\color{red}u$ и $\color{red}v$ это неиспользованные параметры в типе функций.
+
+---
+
+Теперь покажем, что выражение действительно имеет требуемый тип:
+
+$$\begin{aligned}
+&⊢ \big(λ(α\, β:\mathcal U\ 1)(x:α)(y:β).\;x\big) : ∀α\,β:\mathcal U\ 1.\; α → β → α \\
+(α:\mathcal U\ 1) &⊢ \big(λ(β:\mathcal U\ 1)(x:α)(y:β).\;x\big) : ∀β:\mathcal U\ 1.\; α → β → α \\
+(α:\mathcal U\ 1),(β:\mathcal U\ 1) &⊢ \big(λ(x:α)(y:β).\;x\big) :  α → β → α \\
+(α:\mathcal U\ 1),(β:\mathcal U\ 1),(x:α) &⊢ \big(λ(y:β).\;x\big) :  β → α \\
+(α:\mathcal U\ 1),(β:\mathcal U\ 1),(x:α),(y:β) &⊢ x : α \\
+\end{aligned}$$
+
+Суждения о типах опущены, так как мы уже выводили их раньше.
+
+Проверка типов — нудный, но полностью механический процесс.
 
 ---
