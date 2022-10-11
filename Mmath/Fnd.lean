@@ -1,5 +1,3 @@
-import Mmath.Notation
-
 #eval 2+2
 #check Sigma
 #check Σ'x, x > 3
@@ -9,8 +7,6 @@ import Mmath.Notation
 
 #check HasEquiv
 #check Fin
-
-infixr:90 "⍤" => λf g => g∘f
 
 -- Карта и территория
 
@@ -37,39 +33,12 @@ infixr:90 "⍤" => λf g => g∘f
 
 -- Множества и зависимые пары
 
-def Set (α: Type u) := α → Prop
-
-namespace Set
-
-protected def mem (a: α) (s: Set α) :=  s a
-instance : Mem α (Set α)            :=  ⟨Set.mem⟩
-
-protected def subset (s t: Set α) :=  ∀{x}, s x → t x
-instance : Subset (Set α)         :=  ⟨Set.subset⟩
-
-def univ : Set α                   :=  λx => true
-instance : EmptyCollection (Set α) :=  ⟨λx => False⟩
-
-protected def singleton (a: α)   : Set α :=  λx => x = a
-
-protected def union (s t: Set α) : Set α :=  λx => s x ∨ t x
-protected def inter (s t: Set α) : Set α :=  λx => s x ∧ t x
-
-instance : Union (Set α) := ⟨Set.union⟩
-instance : Inter (Set α) := ⟨Set.inter⟩
-
-protected def insert (a: α)(s: Set α) : Set α := λx => x = a ∨ s x
-
-def image (f: α → β)(s: Set α) : Set β := λy => ∃x, s x ∧ f x = y
-
-end Set
-
 -- Функции
 
 namespace Function
 
-def retraction   (f: α → ω)(g: ω → α) : Prop :=  ∀x, g (f x) = x
-def coretraction (f: ω → α)(g: α → ω) : Prop :=  retraction g f
+def retraction   (f: α → ω)(g: ω → α): Prop :=  ∀x, g (f x) = x
+def coretraction (f: ω → α)(g: α → ω): Prop :=  retraction g f
 
 def inverse (f: α → ω)(g: ω → α) : Prop :=  retraction f g ∧ retraction g f
 
@@ -79,14 +48,13 @@ def bijective  (f: α → ω) : Prop :=  injective f ∧ surjective f
 
 theorem has_retr_injective (f: α → ω)(er: ∃g, retraction f g) : injective f :=
 by
-  let ⟨g, r⟩ := er;  intro x y;  intro(e: f x = f y);  show x = y
+  let ⟨g, r⟩ := er;
+  intro x y (e: f x = f y);  show x = y
   have e2: g (f x) = g (f y) := congrArg g e
-  rw[r x, r y] at e2;  exact e2
+  exact r x ▸ r y ▸ e2
 
 theorem has_coretr_surjective (f: ω → α)(ec: ∃g, coretraction f g) : surjective f :=
-by
-  let ⟨g, h⟩ := ec;  intro y;  show ∃x, f x = y
-  exists g y;  rw[h y]
+  let ⟨g,c⟩ := ec;  λy:α => ⟨g y, (by rw[c y] : f (g y) = y)⟩
 
 -- theorem inj_has_retraction (f: α → ω)(ij: injective f) : ∃g, retraction f g :=
 -- by sorry
@@ -94,14 +62,40 @@ by
 -- theorem surj_has_coretraction (f: α → ω)(sj: surjective f) : ∃g, coretraction f g :=
 -- by sorry
 
-theorem lawvere_fixpoint (f: α → (α → ω))(sj: surjective f): ∀n: ω → ω, ∃x, n x = x :=
-by
-  intro n
-  let d := λx => n (f x x);  let ⟨c, fp⟩ := sj d;  exists d c
-  apply Eq.symm;  calc
-    d c = n (f c c) := rfl
-      _ = n (d c)   := by rw[fp]
+theorem lwfix (f: α → α → ω)(sj: surjective f)(u: ω → ω): ∃x, u x = x := by
+  let d := λx => u (f x x);  let ⟨c,fp⟩ := (sj d : ∃c, f c = d);
+  refine ⟨d c, Eq.symm ?_⟩
+  calc
+    d c = u (f c c) := rfl
+      _ = u (d c)   := by rw[fp] 
 
 end Function
 
 -- Отношения
+
+---------------
+
+#check WellFounded
+
+#check Acc
+
+example (n:Nat): Acc Nat.lt n := by
+  apply Nat.rec
+  · show Acc _ 0
+    exact Acc.intro _ $ λk (h: k < 0) => absurd h (Nat.not_lt_zero k)
+  · refine λn h => (?_: Acc _ n.succ)
+    refine Acc.intro _ $ λk (lt: k < n.succ) => (?_: Acc _ k)
+    apply (Nat.eq_or_lt_of_le (Nat.le_of_succ_le_succ lt)).elim
+    · intro (l: k = n); exact l ▸ h
+    · intro (r: k < n); exact Acc.inv h r
+
+#check Eq.subst
+
+-- example {C: α → Sort v}(F: ∀ x, (∀ y, r y x → C y) → C x)(x:α)(a: Acc r x): C x :=
+--   a.rec (λx _ ih => F x ih)
+
+#print Acc.rec
+
+inductive WTree {α:Type}: α → Type where
+| leaf (r:α): WTree r
+| branch (x:α)(b: ∀y:α, WTree y): WTree x

@@ -1,3 +1,0 @@
-import Mmath.Fnd
-
--- Моноиды
