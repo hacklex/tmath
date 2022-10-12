@@ -3,7 +3,7 @@
 -- просто введя команду в текстовый редактор
 
 -- Команда `#check` позволяет проверить, что выражение корректно типизированно
-#check ((λα β: Type => λx:α => λy:β => x) : ∀α β: Type, α → β → α)
+#check ((λα β: Type => λx:α => λ_:β => x) : ∀α β: Type, α → β → α)
 -- Lean во многих случаях может сам вывести тип, и нам не нужно его указыать
 #check λ(α β: Type)(x:α)(_:β) => x
 
@@ -100,6 +100,13 @@ def natRec {M: Nat → Sort u}(z: M Nat.zero)(f: ∀n:Nat, M n → M n.succ): (t
 | Nat.succ n => f n (natRec z f n)
 
 #reduce (λn => Nat.rec (motive := λ_ => Nat) n (λ_ s => s.succ)) 2 3
+
+#reduce (Nat.rec 2 (λ_ s => s.succ) : Nat → Nat) 3
+#reduce (λ_ s => s.succ) 2 $ (Nat.rec 2 (λ_ s => s.succ) : Nat → Nat) 2
+#reduce (λ_ s => s.succ) 2 $ (λ_ s => s.succ) 1 $ (Nat.rec 2 (λ_ s => s.succ) : Nat → Nat) 1
+#reduce (λ_ s => s.succ) 2 $ (λ_ s => s.succ) 1 $ (λ_ s => s.succ) 0 $
+  (Nat.rec 2 (λ_ s => s.succ) : Nat → Nat) 0
+#reduce (λ_ s => s.succ) 2 $ (λ_ s => s.succ) 1 $ (λ_ s => s.succ) 0 $ 2
 
 #print Bool.rec
 #print Nat.casesOn
