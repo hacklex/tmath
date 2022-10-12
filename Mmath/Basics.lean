@@ -145,3 +145,11 @@ def natRec {M: Nat → Sort u}(z: M Nat.zero)(f: ∀n:Nat, M n → M n.succ): (t
 #print Empty.rec
 
 #check λe:Empty => (e.rec : Nat)
+
+def BoolEq (a: Bool)(b: Bool): Prop :=
+  a.rec (b.rec True False) (b.rec False True)
+
+example: ∀b:Bool, BoolEq b b := Bool.rec ⟨⟩ ⟨⟩
+
+example (P Q: Type)(pq: P ⊕ Q): Prop := pq.rec (λ_ => False) (λ_ => True)
+-- example (P Q: Prop)(pq: P ∨ Q): Prop := pq.rec (λ_ => False) (λ_ => True)
