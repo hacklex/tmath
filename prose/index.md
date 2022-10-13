@@ -1,8 +1,8 @@
 # Типизированная математика
 
-
 ```{toctree}
 :glob: true
-:maxdepth: 3
 
+expr/index.md
+basics/index.md
 ```

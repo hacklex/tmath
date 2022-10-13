@@ -33,6 +33,7 @@ import sys
 extensions = [
     "myst_parser",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
     "sphinx.ext.todo",
     "sphinx_copybutton",
 ]
@@ -40,7 +41,7 @@ extensions = [
 myst_enable_extensions = [
     "colon_fence",
     "linkify",
-    "tasklist",
+    "dollarmath"
 ]
 
 myst_heading_anchors = 3
