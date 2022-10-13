@@ -153,3 +153,27 @@ example: ∀b:Bool, BoolEq b b := Bool.rec ⟨⟩ ⟨⟩
 
 example (P Q: Type)(pq: P ⊕ Q): Prop := pq.rec (λ_ => False) (λ_ => True)
 -- example (P Q: Prop)(pq: P ∨ Q): Prop := pq.rec (λ_ => False) (λ_ => True)
+
+#check Decidable.byContradiction
+#check Bool.and_true
+#check decidable_of_decidable_of_iff
+
+instance {P Q: Prop}: [Decidable P] → [Decidable Q] → Decidable (P ∧ Q)
+| isFalse np, _          => isFalse $ λpq => np pq.left
+| _,          isFalse nq => isFalse $ λpq => nq pq.right
+| isTrue p,   isTrue q   => isTrue  $ ⟨p,q⟩
+
+instance {P Q: Prop}: [Decidable P] → [Decidable Q] → Decidable (P ∨ Q)
+| isFalse np, isFalse nq => isFalse $ λpq => pq.elim np nq
+| isTrue p,   _          => isTrue  $ Or.inl p
+| _,          isTrue q   => isTrue  $ Or.inr q
+
+theorem decide_and {P Q: Prop}[dp: Decidable P][dq:Decidable Q]
+  : decide (P ∧ Q) = (decide P && decide Q) :=
+by
+  apply dite P <;> (intro; simp [*])
+
+theorem decide_or {P Q: Prop}[dp: Decidable P][dq:Decidable Q]
+  : decide (P ∨ Q) = (decide P || decide Q) :=
+by
+  apply dite P <;> (intro; simp [*])
