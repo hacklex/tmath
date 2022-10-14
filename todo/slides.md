@@ -170,9 +170,9 @@ $$add(3)(4) \xrightarrow{*} (λk.\; 3+k)(4) \xrightarrow{*}7$$
 Лямбда-исчисление это анонимные функции превращённые в формальную систему. Синтаксис:
 
 $$\begin{aligned}
-expr ::=\ &var & &\text{(имя переменной)} \\
-\mid\quad &“λ” \, var\ “.”\ expr & &\text{(абстракция)} \\
-\mid\quad &expr\ expr & &\text{(применение)}
+{\color{red}expr} ::=\ &{\color{red}var} & &\text{(имя переменной)} \\
+\mid\quad &λ\, {\color{red}var}\, .\ {\color{red}expr} & &\text{(абстракция)} \\
+\mid\quad &{\color{red}expr}\ {\color{red}expr} & &\text{(применение)}
 \end{aligned}$$
 
 Имя переменной может содержать более одного символа. Кроме того, мы различаем строчные буквы от заглавных: $ab$ и $aB$ это два разных имени.
@@ -418,11 +418,11 @@ $$1\ (4 + λx.\;x)$$
 Синтаксис:
 
 $$\begin{aligned}
-expr ::=\ &var & &\text{(имя переменной)} \\
-\mid\quad &“λ” \, var\ “{:}”\ expr\ “.”\ expr & &\text{(абстракция)} \\
-\mid\quad &expr\ expr & &\text{(применение)} \\
-\mid\quad &“\mathcal{U}”\ nat & &\text{(вселенная типов)} \\
-\mid\quad &“∀” \, var\ “{:}”\ expr\ “.”\ expr & &\text{(тип функций)} \\
+{\color{red}expr} ::=\ &{\color{red}var} & &\text{(имя переменной)} \\
+\mid\quad &λ\, {\color{red}var}\ {:}\ {\color{red}expr}\, .\ {\color{red}expr} & &\text{(абстракция)} \\
+\mid\quad &{\color{red}expr}\ {\color{red}expr} & &\text{(применение)} \\
+\mid\quad &\mathcal{U}\ {\color{red}nat} & &\text{(вселенная типов)} \\
+\mid\quad &∀ \, {\color{red}var}\ {:}\ {\color{red}expr}\, .\ {\color{red}expr} & &\text{(тип функций)} \\
 \end{aligned}$$
 
 В абстракции появилось выражение после двоеточия. Это и есть тип переменной.

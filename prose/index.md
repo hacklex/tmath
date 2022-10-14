@@ -5,4 +5,5 @@
 
 expr/index.md
 basics/index.md
+misc/index.md
 ```
