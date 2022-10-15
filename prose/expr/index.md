@@ -3,7 +3,7 @@
 ```{toctree}
 :glob: true
 
-meta.md
+syn.md
 func.md
 lambda.md
 coc.md
