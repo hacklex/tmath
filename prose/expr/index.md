@@ -4,8 +4,8 @@
 :glob: true
 
 syn.md
-func.md
-lambda.md
+fun.md
+lam.md
 coc.md
 lean.md
 ```
