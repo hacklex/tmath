@@ -15,9 +15,12 @@
         poetryEnv = pkgs.poetry2nix.mkPoetryEnv
           { inherit python;  projectDir = ./.;
             overrides = [pkgs.poetry2nix.defaultPoetryOverrides]; };
+        tl = with pkgs;
+          ( texlive.combine
+            { inherit (texlive) scheme-basic standalone xkeyval pgf tikz-cd; } );
         pyEnv = python.withPackages (p: with p; [poetry]);
       in rec
-        { devShell = pkgs.mkShell {buildInputs = [pyEnv];};
-          packages.default = devShell;                          };
+        { devShell = pkgs.mkShell { buildInputs = [tl pkgs.pdf2svg pyEnv]; };
+          packages.default = devShell;                           };
     in
       with flake-utils.lib; eachSystem defaultSystems out;                         }
