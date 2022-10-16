@@ -44,13 +44,14 @@ $$\begin{aligned}
 
 - Вселенные типов пронумерованы натуральными числами: $\mathcal U\ 0$, $\mathcal U\ 1$, ...
 - Как и $λ$, $∀$ также связывает переменные
+  - И захватывает всё, что справа
 - Тип $∀{\color{red}x}: {\color{red}α}.\; {\color{red}β}$ также записывается как $(\textcolor{red}x: {\color{red}α}) → {\color{red}β}$
   - Или даже как ${\color{red}α} → {\color{red}β}$, если в $\color{red}β$ нет свободных вхождений переменной $\color{red}x$
+  - Стрелка правоассоциативна: ${\color{red}α} → {\color{red}β} → {\color{red}γ}$ означает ${\color{red}α} → ({\color{red}β} → {\color{red}γ})$
 - $λ({\color{red}x}:{\color{red}α})({\color{red}y}:{\color{red}β}).\; {\color{red}e}$ означает $λ{\color{red}x}:{\color{red}α}.\;λ{\color{red}y}:{\color{red}β}.\; {\color{red}e}$
   - Аналогично для $∀({\color{red}x}:{\color{red}α})({\color{red}y}:{\color{red}β}).\; {\color{red}τ}$
-- Стрелка правоассоциативна: ${\color{red}α} → {\color{red}β} → {\color{red}γ}$ означает ${\color{red}α} → ({\color{red}β} → {\color{red}γ})$
 
-Правилом вычисления в исчислении конструкций является бета-редукция.
+Правилом вычисления в исчислении конструкций является бета-редукция: $(λ{\color{red}x}:{\color{red}α}.\; {\color{red}e})\ {\color{red}v} ⟶ \; {\color{red}e}[{\color{red}x} := {\color{red}v}]$.
 
 ---
 
