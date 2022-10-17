@@ -30,7 +30,10 @@ Prop : Type 0 : Type 1 : Type 2 : ...
 `Type 0` таже записывается как просто `Type`.
 
 А сейчас, установим Lean и создадим проект, как показано в этом видео:
-https://www.youtube.com/watch?v=yZo6k48L0VY
+
+```{raw} html
+<iframe width="720" height="380" src="https://www.youtube.com/embed/yZo6k48L0VY" title="Getting Started with Lean 4 in Visual Studio Code" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
 
 Далее, опишем всё сразу кодом.
 

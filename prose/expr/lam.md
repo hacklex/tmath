@@ -66,7 +66,8 @@ $$\begin{aligned}
 $$\begin{aligned}
 &λx.\;x &\qquad &λ.\; \underline 0 \\
 &λx.\;λy.\;y & &λ.\; λ.\ \underline 1 \\
-&(λx.\;λy.\; y\ x)\ z & &(λ.\;λ.\; \underline 1\ \underline 0)\ z
+&(λx.\;λy.\; y\ x)\ z & &(λ.\;λ.\; \underline 1\ \underline 0)\ z \\
+&λf.\; (λx.\; x)\ (λy.\; f\ w) & &λ.\; (λ.\; \underline 1)\ (λ.\; \underline 0\ w)
 \end{aligned}$$
 
 Выражения $\color{red}e_1$ и $\color{red}e_2$ называются альфа-эквивалентными (пишется $\textcolor{red}{e_1} \equiv_α \textcolor{red}{e_2}$), если их локально безымянные формы совпадает.
@@ -107,7 +108,7 @@ $$(λ\textcolor{red}x.\;\textcolor{red}e)\ \textcolor{red}v \longrightarrow {\te
 
 Мы пишем ${\color{red}e_1} ⟶ {\color{red}e_2}$, если применение бета-редукции к ${\color{red}e_1}$ даёт выражение ${\color{red}e_2}$.
 
-Мы пишем ${\color{red}e_1} \xrightarrow{*} {\color{red}e_2}$, если применение конечного числа (включая нуль)
+Мы пишем ${\color{red}e_1} \xrightarrow{\;*\;} {\color{red}e_2}$, если применение конечного числа (включая нуль)
 редукций к выражению ${\color{red}e_1}$ даёт выражение ${\color{red}e_2}$.
 
 Правила вычисления не говорят, какой именно редекс заменяется, и потому одно и то же выражение можно вычислять по разному:
@@ -121,19 +122,15 @@ $$\begin{aligned}
 
 Несмотря на то, что вычислять можно по разному, всегда есть возможность придти к одному и тому же результату.
 
-**Теорема (Чёрч — Россер):** Пусть ${\color{red}e} \xrightarrow{*} {\color{red}a}$ и ${\color{red}e} \xrightarrow{*} {\color{red}b}$. Тогда существует такое выражение $\color{red}c$, что ${\color{red}a} \xrightarrow{*} {\color{red}с}$ и ${\color{red}b} \xrightarrow{*} {\color{red}c}$.
+**Теорема (Чёрч — Россер):** Пусть ${\color{red}e} \xrightarrow{\;*\;} {\color{red}a}$ и ${\color{red}e} \xrightarrow{\;*\;} {\color{red}b}$. Тогда существует такое выражение $\color{red}c$, что ${\color{red}a} \xrightarrow{\;*\;} {\color{red}с}$ и ${\color{red}b} \xrightarrow{\;*\;} {\color{red}c}$.
 
 Это важнейшая теорема лямбда-исчисления. Но доказывать мы её не будем.
 
 Утверждение теоремы можно изобразить диаграммой.
 
----
+![](/_img/church-rosser.svg)
 
-https://q.uiver.app/?q=WzAsNCxbMSwwLCJ7XFxjb2xvcntyZWR9ZX0iXSxbMCwxLCJ7XFxjb2xvcntyZWR9YX0iXSxbMiwxLCJ7XFxjb2xvcntyZWR9Yn0iXSxbMSwyLCJ7XFxjb2xvcntyZWR9YWJ9Il0sWzAsMSwiKiIsMl0sWzAsMiwiKiJdLFsyLDMsIioiLDJdLFsxLDMsIioiXV0=
-
----
-
-Выражение $\color{red}a$ вычислительно равно выражению $\color{red}b$ (пишется ${\color{red}a} \equiv {\color{red}b}$), если существует такое выражение $\color{red}c$, что ${\color{red}a} \xrightarrow{*} {\color{red}c}$ и ${\color{red}b} \xrightarrow{*} {\color{red}c}$.
+Выражение $\color{red}a$ вычислительно равно выражению $\color{red}b$ (пишется ${\color{red}a} \equiv {\color{red}b}$), если существует такое выражение $\color{red}c$, что ${\color{red}a} \xrightarrow{\;*\;} {\color{red}c}$ и ${\color{red}b} \xrightarrow{\;*\;} {\color{red}c}$.
 
 Вычислительное равенство удовлетворяет основным свойствам эквивалентности:
 
@@ -143,16 +140,11 @@ https://q.uiver.app/?q=WzAsNCxbMSwwLCJ7XFxjb2xvcntyZWR9ZX0iXSxbMCwxLCJ7XFxjb2xvc
 
 Первые два свойства следуют непосредственно из определения. Последнее же следует из теоремы Чёрча — Россера, что проще всего показать диаграммой.
 
----
-
-https://q.uiver.app/?q=WzAsNixbMCwwLCJ7XFxjb2xvcntyZWR9YX0iXSxbMiwwLCJ7XFxjb2xvcntyZWR9Yn0iXSxbNCwwLCJ7XFxjb2xvcntyZWR9Y30iXSxbMSwxLCJ7XFxjb2xvcntyZWR9YWJ9Il0sWzMsMSwie1xcY29sb3J7cmVkfWJjfSJdLFsyLDIsIntcXGNvbG9ye3JlZH1hYmN9Il0sWzAsMywiKiJdLFsxLDMsIioiLDJdLFsxLDQsIioiXSxbMiw0LCIqIiwyXSxbMyw1LCIqIl0sWzQsNSwiKiIsMl1d
-
-
----
+![](/_img/cr-equiv.svg)
 
 Выражение $\color{red}n$ находится в нормальной форме, если к нему невозможно применить правило вычисления.
 
-Говорят, что $\color{red}n$ является нормальной формой выражения $\color{red}e$, если $\color{red}n$ находится в нормальной форме и  ${\color{red}e} \xrightarrow{*} {\color{red}n}$.
+Говорят, что $\color{red}n$ является нормальной формой выражения $\color{red}e$, если $\color{red}n$ находится в нормальной форме и  ${\color{red}e} \xrightarrow{\;*\;} {\color{red}n}$.
 
 Из теоремы Чёрча — Россера следует, что у выражения может быть только одна нормальная форма. Кроме того, если два выражения имеют одну и ту же нормальную форму, то они вычислительно равны.
 

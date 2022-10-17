@@ -100,3 +100,11 @@ dummy:
 	$(SPHINXBUILD) -b dummy $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+build/%.pdf: tikz/%.tex
+	cd tikz ; pdflatex -output-directory ../build $*
+
+build/%.svg: build/%.pdf
+	pdf2svg $< $@
+
+tikz: build/church-rosser.svg build/cr-equiv.svg build/syn1.svg build/syn2.svg

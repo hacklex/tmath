@@ -60,13 +60,15 @@ $$\begin{aligned}
 
 Разобранное выражение можно представить в виде диаграммы:
 
-https://q.uiver.app/?q=WzAsNSxbMiwwLCJcXHRleHRjb2xvcntyZWR9XFxidWxsZXQgLSBcXHRleHRjb2xvcntyZWR9XFxidWxsZXQiXSxbMSwxLCJ7XFxjb2xvcntyZWR9XFxidWxsZXR9IMO3IHtcXGNvbG9ye3JlZH1cXGJ1bGxldH0iXSxbMywxLCIxIl0sWzAsMiwiMyJdLFsyLDIsIjIiXSxbMCwxXSxbMCwyXSxbMSwzXSxbMSw0XV0=
+
+```{image} /_img/syn1.svg
+```
 
 Это *синтаксическое дерево*. Деревья в информатике рисуются сверху вниз, с корнем наверху и с листьями внизу.
 
 Мы разобрали выражение определённым образом, но используя эту грамматику можно разобрать то же самое выражение иначе:
 
-https://q.uiver.app/?q=WzAsNSxbMiwxLCJcXHRleHRjb2xvcntyZWR9XFxidWxsZXQgLSBcXHRleHRjb2xvcntyZWR9XFxidWxsZXQiXSxbMSwwLCJ7XFxjb2xvcntyZWR9XFxidWxsZXR9IMO3IHtcXGNvbG9ye3JlZH1cXGJ1bGxldH0iXSxbMywyLCIxIl0sWzAsMSwiMyJdLFsxLDIsIjIiXSxbMCwyXSxbMSwzXSxbMSwwXSxbMCw0XV0=
+![](/_img/syn2.svg)
 
 Грамматика, которая допускает различный разбор одного и того же выражения называется неоднозначной.
 
