@@ -48,13 +48,13 @@ $$∀(P:Prop)(x: P)(y:P).\; x = y$$
 ```lean
 #check Subtype
 
-def fls (_:Bool): Bool := false
+def fls (_:Bool): Nat := false
 
 #check
-  let I := {b:Bool // ∃x, fls x = b}
-  let f:I := ⟨false, ⟨false, rfl⟩⟩
-  let t:I := ⟨false, ⟨true, rfl⟩⟩
-  (rfl : f = t)
+  let I := {b:Bool // ∃n, fls n = b}
+  let z:I := ⟨false, ⟨0, rfl⟩⟩
+  let s:I := ⟨false, ⟨1, rfl⟩⟩
+  (rfl : z = s)
 ```
 
 ```lean
